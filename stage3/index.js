@@ -15,7 +15,7 @@ function mainMenu() {
   {
     type: 'list',
     name: 'choice',
-    message: 'What would you like to do?'
+    message: 'What would you like to do?',
     choices: [
       {
         name: 'View all employees',
