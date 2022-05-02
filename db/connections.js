@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 
 
 // Connect to database
-const connection = mysql.createConnection(
+const db = mysql.createConnection(
   {
     host: 'localhost',
     // MySQL username,
@@ -22,4 +22,4 @@ connection.connect(function(err){
 
 
 
-module.exports = connection;
+module.exports = db;
