@@ -232,31 +232,39 @@ function viewEmployees () {
       });
     }
 
+    // const selectArole = roleSelector();
+    //   const selectManager = managerSelector();
     // TODO: ADD EMPLOYEE! oop
     function addEmployee () { 
+      
       inquirer.prompt([
+
+        
         {
-          name: 'firstName',
+          name: 'firstname',
             type: 'input', 
               message: 'Whats the employees First Name?'
         },
         {
-          name: 'lastName',
+          name: 'lastname',
             type: 'input', 
               message: 'Whats the employees Last Name'
         },
+       
           {
             name: 'role',
               type: 'list', 
                 message: 'Whats their Role?',
-                  choice: roleSelector()
+                  choices: roleSelector
           },
             {
               name: 'choice',
                 type: 'rawlist', 
                   message: 'Whats their Managers Name?',
-                    choices: managerSelector()
+                    choices: managerSelector
             },
+
+            
       ]).then (function (val){
         var idRole = roleSelector().indexOf(val.role) + 1
           var managerId = managerSelector().indexOf(val.choice) + 1
@@ -277,10 +285,40 @@ function viewEmployees () {
     }
 
 
+    // TODO add a ROLE
+    function addRole () {
+      connection.query('SELECT role.title AS Title, role.salary AS Salary FROM role', 
+        function (err, res) {
+          inquirer.prompt([
+            {
+              name: 'Title',
+                type: 'input',
+                  message: 'Whats role do you want to add?'
+            },
+              {
+                name: 'Salary',
+                  type: 'input',
+                    message: 'Whats the Salary?'
+              }
+          ]).then(function (res) {
+            connection.query('INSERT INTO role SET ?', 
+            {
+              title: res.Title,
+                salary: res.Salary,
+            },
+              function (err){
+                if (err) throw err
+                  console.table(res);
+                    startMenu();
+              }
+            )
+          });
+        }
+      );
+    }
 
 
-
-
+          
 
 
 
