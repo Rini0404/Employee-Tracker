@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const inquirer = require('inquirer');
+const res = require('express/lib/response');
 // const db = require('../db/connections');
 
 // const { check } = require('../helpers/validation');
@@ -36,12 +37,12 @@ const connection = mysql.createConnection(
         message: 'How may we begin?',
           choices: [
             'View Roles',
-            'View employees',
+            'View Employees',
             'View Departments',
             'Add a department to your organization',
             'Add Role',
             'Add Employee',
-            'Update Employee Role',
+            'Update Employee',
             'Exit',
           ]
       }
@@ -88,7 +89,7 @@ const connection = mysql.createConnection(
 // view Emps
 // TODO: NOT WORKING,,,,,,
 function viewEmployees () {
-  connection.query( `SELECT e.id AS 'Employee ID', CONCAT(e.last_name, ', ', e.first_name) AS Employee, role.title AS Title, department.name AS Departments, role.salary AS Salary, IF NULL(CONCAT(m.last_name, ', ', m.first_name), "") AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id LEFT JOIN role ON role.id = e.role_id LEFT JOIN department ON department.name = role.department_id`,
+  connection.query( `SELECT e.id AS 'Employee ID', CONCAT(e.last_name, ', ', e.first_name) AS Employee, role.title AS Title, department.name AS Departments, role.salary AS Salary, IFNULL(CONCAT(m.last_name, ', ', m.first_name), "") AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id LEFT JOIN role ON role.id = e.role_id LEFT JOIN department ON department.name = role.department_id`,
       function(err, res) {
         if (err) throw err
           console.table(res)
@@ -162,7 +163,8 @@ function viewEmployees () {
             type: 'input',  
               message: 'Which Department would you like to add?',
         }
-      ]).then(function (res){
+      ]).then(function (res) {
+        
         connection.query('INSERT INTO department SET ?',
         {
           name: res.name,
@@ -188,7 +190,7 @@ function viewEmployees () {
               inquirer.prompt([
                 {
                   name: "lastName", 
-                    type: 'rawlist', 
+                    type: 'list', 
                       message: `What is this new employee's title?`,
                         choices: function () {
                           var lastName = [];
@@ -228,44 +230,42 @@ function viewEmployees () {
     // const rini = roleSelector();
     //   const pini = managerSelector();
     // TODO: ADD EMPLOYEE! oop
-    function addEmployee (roleSelector, managerSelector) { 
+    function addEmployee () { 
       
       inquirer.prompt([
 
         
         {
-          name: 'firstname',
+          name: 'firstName',
             type: 'input', 
               message: 'Whats the employees First Name?'
         },
         {
-          name: 'lastname',
+          name: 'lastName',
             type: 'input', 
               message: 'Whats the employees Last Name'
         },
-          {
-            name: 'role',
-              type: 'list', 
-                message: 'Whats their Role?',
-                  choices: roleSelector
-          },
-            {
-              name: 'choice',
-                type: 'list', 
-                  message: 'Whats their Managers Name?',
-                    choices: managerSelector
-            },
+        {
+          type: "input",
+          message:
+            "Enter new employees roleID ('1:Human Resources, 2:Shipping, 3:Loss Prevention, 4:Grocery, 5:Sales'):",
+          name: "Role",
+        },
+  
+        {
+          type: "input",
+          message: "Enter new employees managerID:",
+          name: "managerID",
+        },
 
             
       ]).then (function (val){
-        var idRole = roleSelector().indexOf(val.role) + 1
-          var managerId = managerSelector().indexOf(val.choice) + 1
             connection.query('INSERT INTO employee SET ?',
               {
                 first_name: val.firstName,
                   last_name: val.lastName,
-                    manager_id : managerId,
-                      role_id: idRole 
+                    manager_id : res.managerId,
+                      role_id: res.role 
               },
                 function (err) {
                   if (err) throw err
