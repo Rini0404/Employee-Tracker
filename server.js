@@ -75,20 +75,12 @@ const connection = mysql.createConnection(
               addDepartment();
             break;
             case 'Exit':
-              exit(); //
+              connection.end();
             break;
 
         }
     })
   }
-
-
-
-
-function exit() {
-  return;
-  
-}
 
 
 
@@ -185,6 +177,7 @@ function viewEmployees () {
         );
       });
     }
+    
 
     // TODO: update EMPLOYEE
       function updateEmployee(){
@@ -232,10 +225,10 @@ function viewEmployees () {
       });
     }
 
-    // const selectArole = roleSelector();
-    //   const selectManager = managerSelector();
+    // const rini = roleSelector();
+    //   const pini = managerSelector();
     // TODO: ADD EMPLOYEE! oop
-    function addEmployee () { 
+    function addEmployee (roleSelector, managerSelector) { 
       
       inquirer.prompt([
 
@@ -250,7 +243,6 @@ function viewEmployees () {
             type: 'input', 
               message: 'Whats the employees Last Name'
         },
-       
           {
             name: 'role',
               type: 'list', 
@@ -259,7 +251,7 @@ function viewEmployees () {
           },
             {
               name: 'choice',
-                type: 'rawlist', 
+                type: 'list', 
                   message: 'Whats their Managers Name?',
                     choices: managerSelector
             },
