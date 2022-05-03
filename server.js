@@ -40,7 +40,7 @@ const connection = mysql.createConnection(
             'View Departments',
             'Add a department to your organization',
             'Add Role',
-            'Add employee',
+            'Add Employee',
             'Update Employee Role',
             'Exit',
           ]
@@ -74,15 +74,25 @@ const connection = mysql.createConnection(
             case 'Add a department to your organization':
               addDepartment();
             break;
-          // add
-            case 'Update Employee Role':
-              updateEmployee();
+            case 'Exit':
+              exit(); //
             break;
-          // add
 
         }
     })
   }
+
+
+
+
+function exit() {
+  return;
+  
+}
+
+
+
+
 // view Emps
 // TODO: NOT WORKING,,,,,,
 function viewEmployees () {
@@ -228,12 +238,12 @@ function viewEmployees () {
         {
           name: 'firstName',
             type: 'input', 
-              message: 'Whats the employees First Name?',
+              message: 'Whats the employees First Name?'
         },
         {
           name: 'lastName',
             type: 'input', 
-              message: 'Whats the employees Last Name',
+              message: 'Whats the employees Last Name'
         },
           {
             name: 'role',
@@ -257,7 +267,7 @@ function viewEmployees () {
                     manager_id : managerId,
                       role_id: idRole 
               },
-                function (err, res) {
+                function (err) {
                   if (err) throw err
                     console.table(val)
                     startMenu();
