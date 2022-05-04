@@ -28,7 +28,7 @@
 # 📌installation
 ## git clone => npm i => npm run start
 # 📝Steps
-## -
+## Remmeber to use your own MySql/dBeaver credentials! 
 # 📟Languages
 ## JavaScript and MySql 
 # 🎭Contributors to the project
