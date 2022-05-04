@@ -18,7 +18,7 @@
 # 🎟Title
 ## Employee Tracker Using MySql!
 # 🖼Picture
-##![image](https://user-images.githubusercontent.com/95727555/166609424-a3890ce0-5ed2-4700-b4fc-9d40bfc02ba0.png)
+![image](https://user-images.githubusercontent.com/95727555/166609424-a3890ce0-5ed2-4700-b4fc-9d40bfc02ba0.png)
 # 📖Description
 ## This Node JS app lets you track employee details, like salaries, roles, names, and their managers!
 # 🔎My Repo
