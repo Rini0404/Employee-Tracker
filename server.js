@@ -180,6 +180,7 @@ function viewEmployees () {
       });
     }
     
+    
 
     // TODO: update EMPLOYEE
       function updateEmployee(){
@@ -202,24 +203,24 @@ function viewEmployees () {
                   message: `What is the employees lastName?`,
                 },
                 {
-                  name: 'role',
-                    type: 'rawlist',
-                      message: `What is this new employee's Title?`,
-                          choices: roleSelector()
+                  name: "role",
+                  message: "What is the new Role for this employee?",
+                  type: "input",
                 },
 
-              ]).then(function (val) {
-                var idRole = selectRole().indexOf(val.role) + 1 
-                  connection.query('UPDATE employee SET WHERE ?',
+              ]).then(function (res) {
+                  connection.query("UPDATE employee set ? where ?",
+                  [
                     {
-                      last_name: val.lastName
+                      last_name: res.lastName,
+                      role_id: res.role,
+                      manager_id: res.manager_id,
                     },
-                    {
-                      role_id: idRole
-                    },
+                    { id: res.id },
+                  ],
                     function (err) {
                       if (err) throw err
-                        console.table(val)
+                        console.table(res)
                           startMenu();
                     }
                   )
@@ -227,8 +228,7 @@ function viewEmployees () {
       });
     }
 
-    // const rini = roleSelector();
-    //   const pini = managerSelector();
+    
     // TODO: ADD EMPLOYEE! oop
     function addEmployee () { 
       
@@ -308,113 +308,3 @@ function viewEmployees () {
         }
       );
     }
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // const departments = () => {
-  //   inquirer.prompt([
-  //     {
-  //       type: 'input',
-  //       name: 'department',
-  //       message: 'What department would you like to access?',
-  //       // validate: stringCheck, 
-  //       // filter the input to trim `
-  //         filter: (input) => {
-  //           return input.trim();
-  //         },
-  //     }
-  //   ]).then((answers) => {
-  //     const sql = `INSERT INTO departments (name) VALUES (?)`;
-  //       const par = [answers.departments];
-  //         db.query(sql, par, (err, answers) => {
-  //           (err) ? console.log(err) : console.log(`${par} added to the new Departments`)
-  //         })
-  //   })
-  // }
-
-  // const addRole = [{
-  //   type: 'input'
-  // }];
